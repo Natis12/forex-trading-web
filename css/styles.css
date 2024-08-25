@@ -1,63 +1,93 @@
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #f8f9fa;
+    --text-color: #333;
+    --border-color: #dee2e6;
+}
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #fff;
-    color: #000;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
 }
-
-header {
-    text-align: center;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
-    background-color: #000;
-    color: #fff;
 }
-
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+nav {
+    background-color: white;
+    padding: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 nav ul {
-    display: flex;
     list-style-type: none;
     padding: 0;
-    margin: 0 0 20px 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
 }
-
 nav ul li {
-    margin-right: 10px;
+    margin: 0 1rem;
 }
-
 nav ul li a {
     text-decoration: none;
-    padding: 10px 15px;
-    background-color: #f0f0f0;
-    color: #000;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+.tab-content {
+    display: none;
+    padding: 20px;
+    background-color: white;
     border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-
-nav ul li a.active {
-    background-color: #000;
-    color: #fff;
+.tab-content.active {
+    display: block;
 }
-
-main {
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: grid;
+    gap: 1rem;
 }
-
+input, select, button {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
 button {
-    padding: 10px;
-    background-color: #000;
-    color: #fff;
-    border: none;
+    background-color: var(--primary-color);
+    color: white;
     cursor: pointer;
 }
-
-#summary-section {
-    margin-top: 20px;
+button:hover {
+    opacity: 0.9;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+th, td {
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    text-align: left;
+}
+th {
+    background-color: var(--primary-color);
+    color: white;
+}
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+    }
+    nav ul li {
+        margin: 0.5rem 0;
+    }
 }
