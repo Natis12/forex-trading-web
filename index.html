@@ -1,53 +1,359 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <base href="https://forex-trading-dashboard.com/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forex Trading Web</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <meta name="description" content="Dashboard para registrar, analizar y visualizar operaciones de trading en Forex.">
+    <title>Forex Trading Dashboard</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
+            --border-color: #dee2e6;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        nav {
+            background-color: white;
+            padding: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 1rem;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        .tab-content {
+            display: none;
+            opacity: 0;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: opacity 0.5s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+        form {
+            display: grid;
+            gap: 1rem;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select, button {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            text-align: left;
+        }
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Gestión de Operaciones de Trading en Forex</h1>
+        <h1>Forex Trading Dashboard</h1>
     </header>
-
     <nav>
-        <ul id="tabs">
-            <li><a href="#" data-pair="EUR/USD" class="tab active">EUR/USD</a></li>
-            <li><a href="#" data-pair="EUR/GBP" class="tab">EUR/GBP</a></li>
-            <li><a href="#" data-pair="GBP/USD" class="tab">GBP/USD</a></li>
-            <li><a href="#" data-pair="XAU/USD" class="tab">XAU/USD</a></li>
-            <li><a href="#" data-pair="BTC/USD" class="tab">BTC/USD</a></li>
+        <ul>
+            <li><a href="#" onclick="showTab('register')">Registro de Operaciones</a></li>
+            <li><a href="#" onclick="showTab('summary')">Resumen</a></li>
+            <li><a href="#" onclick="showTab('charts')">Gráficos</a></li>
+            <li><a href="#" onclick="showTab('stats')">Estadísticas Avanzadas</a></li>
+            <li><a href="#" onclick="showTab('currency-stats')">Estadísticas por Par</a></li>
+            <li><a href="#" onclick="showTab('edit')">Editar Operaciones</a></li>
         </ul>
     </nav>
-
-    <main>
-        <!-- Formulario para registrar operaciones -->
-        <section id="form-section">
-            <h2>Registrar Operación</h2>
-            <form id="operation-form">
+    <div class="container">
+        <div id="register" class="tab-content active">
+            <h2>Registro de Operaciones</h2>
+            <form id="trade-form">
+                <label for="date">Fecha:</label>
                 <input type="date" id="date" required>
-                <select id="pair" required>
+                <label for="currency-pair">Par de divisas:</label>
+                <select id="currency-pair" required>
+                    <option value="">Seleccione par de divisas</option>
                     <option value="EUR/USD">EUR/USD</option>
                     <option value="EUR/GBP">EUR/GBP</option>
                     <option value="GBP/USD">GBP/USD</option>
                     <option value="XAU/USD">XAU/USD</option>
                     <option value="BTC/USD">BTC/USD</option>
                 </select>
-                <input type="number" id="entry-price" placeholder="Precio de Entrada" step="0.00001" min="0" required>
-                <input type="number" id="exit-price" placeholder="Precio de Salida" step="0.00001" min="0" required>
-                <input type="number" id="quantity" placeholder="Cantidad" step="0.01" min="0" required>
-                <button type="submit">Registrar</button>
+                <label for="operation-type">Tipo de operación:</label>
+                <select id="operation-type" required>
+                    <option value="">Tipo de operación</option>
+                    <option value="buy">Compra</option>
+                    <option value="sell">Venta</option>
+                </select>
+                <label for="entry-price">Precio de entrada:</label>
+                <input type="number" id="entry-price" placeholder="Precio de entrada" step="0.0001" required>
+                <label for="exit-price">Precio de salida:</label>
+                <input type="number" id="exit-price" placeholder="Precio de salida" step="0.0001" required>
+                <label for="quantity">Cantidad:</label>
+                <input type="number" id="quantity" placeholder="Cantidad" step="0.01" required>
+                <button type="submit">Registrar Operación</button>
             </form>
-        </section>
-
-        <!-- Resumen de operaciones y gráficos -->
-        <section id="summary-section">
+        </div>
+        <div id="summary" class="tab-content">
             <h2>Resumen de Operaciones</h2>
-            <div id="summary"></div>
-        </section>
-    </main>
+            <div id="summary-content"></div>
+        </div>
+        <div id="charts" class="tab-content">
+            <h2>Gráficos</h2>
+            <div id="chart-container"></div>
+        </div>
+        <div id="stats" class="tab-content">
+            <h2>Estadísticas Avanzadas</h2>
+            <div id="stats-content"></div>
+            <button onclick="exportStats()">Exportar Estadísticas</button>
+        </div>
+        <div id="currency-stats" class="tab-content">
+            <h2>Estadísticas por Par</h2>
+            <div id="currency-stats-content"></div>
+        </div>
+        <div id="edit" class="tab-content">
+            <h2>Editar Operaciones</h2>
+            <div id="edit-content">
+                <label for="edit-date">Fecha:</label>
+                <input type="date" id="edit-date">
+                <label for="edit-currency-pair">Par de divisas:</label>
+                <select id="edit-currency-pair">
+                    <option value="">Seleccione par de divisas</option>
+                    <option value="EUR/USD">EUR/USD</option>
+                    <option value="EUR/GBP">EUR/GBP</option>
+                    <option value="GBP/USD">GBP/USD</option>
+                    <option value="XAU/USD">XAU/USD</option>
+                    <option value="BTC/USD">BTC/USD</option>
+                </select>
+                <label for="edit-operation-type">Tipo de operación:</label>
+                <select id="edit-operation-type">
+                    <option value="">Tipo de operación</option>
+                    <option value="buy">Compra</option>
+                    <option value="sell">Venta</option>
+                </select>
+                <label for="edit-entry-price">Precio de entrada:</label>
+                <input type="number" id="edit-entry-price" step="0.0001">
+                <label for="edit-exit-price">Precio de salida:</label>
+                <input type="number" id="edit-exit-price" step="0.0001">
+                <label for="edit-quantity">Cantidad:</label>
+                <input type="number" id="edit-quantity" step="0.01">
+                <button onclick="editTrade()">Actualizar Operación</button>
+            </div>
+        </div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js" async></script>
+<script>
+    const trades = [];
 
-    <script src="js/scripts.js"></script>
+    function showTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+    }
+
+    document.getElementById('trade-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (!document.getElementById('date').value || !document.getElementById('currency-pair').value) {
+            alert('Por favor, complete todos los campos requeridos.');
+            return;
+        }
+        const trade = {
+            date: document.getElementById('date').value,
+            currencyPair: document.getElementById('currency-pair').value,
+            operationType: document.getElementById('operation-type').value,
+            entryPrice: parseFloat(document.getElementById('entry-price').value),
+            exitPrice: parseFloat(document.getElementById('exit-price').value),
+            quantity: parseFloat(document.getElementById('quantity').value)
+        };
+        trades.push(trade);
+        updateSummary();
+        updateCharts();
+        updateStats();
+        updateCurrencyStats();
+        this.reset();
+    });
+
+    function updateSummary() {
+        const summary = document.getElementById('summary-content');
+        const profitLoss = trades.reduce((total, trade) => {
+            const pl = (trade.exitPrice - trade.entryPrice) * trade.quantity * (trade.operationType === 'buy' ? 1 : -1);
+            return total + pl;
+        }, 0);
+        summary.innerHTML = `
+            <p>Total de operaciones: ${trades.length}</p>
+            <p>Beneficio/Pérdida neta: $${profitLoss.toFixed(2)}</p>
+        `;
+    }
+
+    function updateCharts() {
+        const chartContainer = document.getElementById('chart-container');
+        chartContainer.innerHTML = '<canvas id="trade-chart"></canvas>';
+        const ctx = document.getElementById('trade-chart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: trades.map(trade => trade.date),
+                datasets: [{
+                    label: 'Evolución de Beneficios/Pérdidas',
+                    data: trades.map(trade => {
+                        const pl = (trade.exitPrice - trade.entryPrice) * trade.quantity * (trade.operationType === 'buy' ? 1 : -1);
+                        return pl;
+                    }),
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Fecha'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Beneficio/Pérdida',
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    function updateStats() {
+        const statsContent = document.getElementById('stats-content');
+        const totalTrades = trades.length;
+        const winningTrades = trades.filter(trade => 
+            (trade.exitPrice - trade.entryPrice) * (trade.operationType === 'buy' ? 1 : -1) > 0
+        ).length;
+        const winRate = (totalTrades > 0) ? (winningTrades / totalTrades) * 100 : 0;
+
+        statsContent.innerHTML = `
+            <p>Tasa de acierto: ${winRate.toFixed(2)}%</p>
+            <p>Operaciones ganadoras: ${winningTrades}</p>
+            <p>Operaciones perdedoras: ${totalTrades - winningTrades}</p>
+        `;
+    }
+
+    function updateCurrencyStats() {
+        const currencyStatsContent = document.getElementById('currency-stats-content');
+        const currencyStats = trades.reduce((acc, trade) => {
+            const key = trade.currencyPair;
+            if (!acc[key]) {
+                acc[key] = { profitLoss: 0, count: 0 };
+            }
+            const pl = (trade.exitPrice - trade.entryPrice) * trade.quantity * (trade.operationType === 'buy' ? 1 : -1);
+            acc[key].profitLoss += pl;
+            acc[key].count += 1;
+            return acc;
+        }, {});
+
+        currencyStatsContent.innerHTML = '<table><tr><th>Par de Divisas</th><th>Total de Operaciones</th><th>Beneficio/Pérdida Neta</th></tr>';
+        for (const [pair, stats] of Object.entries(currencyStats)) {
+            currencyStatsContent.innerHTML += `
+                <tr>
+                    <td>${pair}</td>
+                    <td>${stats.count}</td>
+                    <td>$${stats.profitLoss.toFixed(2)}</td>
+                </tr>
+            `;
+        }
+        currencyStatsContent.innerHTML += '</table>';
+    }
+
+    function editTrade() {
+        const editDate = document.getElementById('edit-date').value;
+        const editCurrencyPair = document.getElementById('edit-currency-pair').value;
+        const editOperationType = document.getElementById('edit-operation-type').value;
+        const editEntryPrice = parseFloat(document.getElementById('edit-entry-price').value);
+        const editExitPrice = parseFloat(document.getElementById('edit-exit-price').value);
+        const editQuantity = parseFloat(document.getElementById('edit-quantity').value);
+        const tradeToEdit = trades.find(trade => 
+            trade.date === editDate &&
+            trade.currencyPair === editCurrencyPair &&
+            trade.operationType === editOperationType
+        );
+        if (tradeToEdit) {
+            tradeToEdit.entryPrice = editEntryPrice;
+            tradeToEdit.exitPrice = editExitPrice;
+            tradeToEdit.quantity = editQuantity;
+            updateSummary();
+            updateCharts();
+            updateStats();
+            updateCurrencyStats();
+        } else {
+            alert('No se encontró la operación para editar.');
+        }
+    }
+
+    function exportStats() {
+        const csvContent = "data:text/csv;charset=utf-8," 
+            + trades.map(e => Object.values(e).join(",")).join("\n");
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "forex_trading_stats.csv");
+        document.body.appendChild(link);
+        link.click();
+    }
+</script>
 </body>
 </html>
