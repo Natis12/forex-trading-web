@@ -10,33 +10,44 @@
     <header>
         <h1>Gestión de Operaciones de Trading en Forex</h1>
     </header>
+
+    <nav>
+        <ul id="tabs">
+            <li><a href="#" data-pair="EUR/USD" class="tab active">EUR/USD</a></li>
+            <li><a href="#" data-pair="EUR/GBP" class="tab">EUR/GBP</a></li>
+            <li><a href="#" data-pair="GBP/USD" class="tab">GBP/USD</a></li>
+            <li><a href="#" data-pair="XAU/USD" class="tab">XAU/USD</a></li>
+            <li><a href="#" data-pair="BTC/USD" class="tab">BTC/USD</a></li>
+        </ul>
+    </nav>
+
     <main>
         <!-- Formulario para registrar operaciones -->
         <section id="form-section">
             <h2>Registrar Operación</h2>
             <form id="operation-form">
-    <input type="date" id="date" required>
-    <select id="pair" required>
-        <option value="EUR/USD">EUR/USD</option>
-        <option value="EUR/GBP">EUR/GBP</option>
-        <option value="GBP/USD">GBP/USD</option>
-        <option value="XAU/USD">XAU/USD</option>
-        <option value="BTC/USD">BTC/USD</option>
-    </select>
-    <input type="number" id="entry-price" placeholder="Precio de Entrada" step="0.00001" min="0" required>
-    <input type="number" id="exit-price" placeholder="Precio de Salida" step="0.00001" min="0" required>
-    <input type="number" id="quantity" placeholder="Cantidad" step="0.01" min="0" required>
-    <button type="submit">Registrar</button>
-</form>
-
+                <input type="date" id="date" required>
+                <select id="pair" required>
+                    <option value="EUR/USD">EUR/USD</option>
+                    <option value="EUR/GBP">EUR/GBP</option>
+                    <option value="GBP/USD">GBP/USD</option>
+                    <option value="XAU/USD">XAU/USD</option>
+                    <option value="BTC/USD">BTC/USD</option>
+                </select>
+                <input type="number" id="entry-price" placeholder="Precio de Entrada" step="0.00001" min="0" required>
+                <input type="number" id="exit-price" placeholder="Precio de Salida" step="0.00001" min="0" required>
+                <input type="number" id="quantity" placeholder="Cantidad" step="0.01" min="0" required>
+                <button type="submit">Registrar</button>
+            </form>
         </section>
+
         <!-- Resumen de operaciones y gráficos -->
         <section id="summary-section">
             <h2>Resumen de Operaciones</h2>
             <div id="summary"></div>
         </section>
     </main>
+
     <script src="js/scripts.js"></script>
 </body>
 </html>
-
