@@ -13,6 +13,30 @@ header {
     color: #fff;
 }
 
+nav ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+nav ul li {
+    margin-right: 10px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    padding: 10px 15px;
+    background-color: #f0f0f0;
+    color: #000;
+    border-radius: 5px;
+}
+
+nav ul li a.active {
+    background-color: #000;
+    color: #fff;
+}
+
 main {
     margin: 20px;
     display: flex;
@@ -37,4 +61,3 @@ button {
 #summary-section {
     margin-top: 20px;
 }
-
