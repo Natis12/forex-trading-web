@@ -15,20 +15,20 @@
         <section id="form-section">
             <h2>Registrar Operación</h2>
             <form id="operation-form">
-                <!-- Campos del formulario -->
-                <input type="date" id="date" required>
-                <select id="pair" required>
-                    <option value="EUR/USD">EUR/USD</option>
-                    <option value="EUR/GBP">EUR/GBP</option>
-                    <option value="GBP/USD">GBP/USD</option>
-                    <option value="XAU/USD">XAU/USD</option>
-                    <option value="BTC/USD">BTC/USD</option>
-                </select>
-                <input type="number" id="entry-price" placeholder="Precio de Entrada" required>
-                <input type="number" id="exit-price" placeholder="Precio de Salida" required>
-                <input type="number" id="quantity" placeholder="Cantidad" required>
-                <button type="submit">Registrar</button>
-            </form>
+    <input type="date" id="date" required>
+    <select id="pair" required>
+        <option value="EUR/USD">EUR/USD</option>
+        <option value="EUR/GBP">EUR/GBP</option>
+        <option value="GBP/USD">GBP/USD</option>
+        <option value="XAU/USD">XAU/USD</option>
+        <option value="BTC/USD">BTC/USD</option>
+    </select>
+    <input type="number" id="entry-price" placeholder="Precio de Entrada" step="0.00001" min="0" required>
+    <input type="number" id="exit-price" placeholder="Precio de Salida" step="0.00001" min="0" required>
+    <input type="number" id="quantity" placeholder="Cantidad" step="0.01" min="0" required>
+    <button type="submit">Registrar</button>
+</form>
+
         </section>
         <!-- Resumen de operaciones y gráficos -->
         <section id="summary-section">
